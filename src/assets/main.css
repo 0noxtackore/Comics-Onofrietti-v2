@@ -1,0 +1,50 @@
+@import './base.css';
+
+#app {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+img {
+  -webkit-user-drag: none;           /* Safari/Chrome */
+  user-select: none;         /* evita selección */
+  pointer-events: none;      /* desactiva clics y arrastre */
+}
+
+
+a,
+.green {
+  text-decoration: none;
+  color: #2563eb;
+  transition: 0.4s;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: rgba(37, 99, 235, 0.15);
+  }
+}
+
+/* Eliminar los estilos problemáticos para desktop */
+@media (min-width: 1024px) {
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  #app {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+}

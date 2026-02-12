@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --onofrietti-red: #2563eb;
+  --onofrietti-black: #151515;
+  --onofrietti-dark-grey: #202020;
+  --onofrietti-grey: #abb1b8;
+  --onofrietti-white: #ffffff;
+  
+  font-family: 'Roboto Condensed', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: var(--onofrietti-white);
+  background-color: var(--onofrietti-black);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-transform: uppercase;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease-in-out;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  text-transform: uppercase;
+}
+
+.onofrietti-button {
+  background-color: #2563eb;
+  color: white;
+  padding: 12px 24px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+  display: inline-block;
+  transition: background-color 0.3s;
+}
+
+img {
+  -webkit-user-drag: none;           /* Safari/Chrome */
+  user-select: none;         /* evita selección */
+  pointer-events: none;      /* desactiva clics y arrastre */
+}
+
+.onofrietti-button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Custom Scrollbar */
+html {
+  scrollbar-color: #2563eb var(--onofrietti-black);
+  scrollbar-width: thin;
+}
+
+/* Scrollbar en navegadores WebKit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0066cc; /* azul del track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #004c99; /* azul más oscuro para el thumb */
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #003366; /* aún más oscuro al pasar el cursor */
+}
+
+::-webkit-scrollbar-button {
+  background: #0066cc; /* flechas en azul */
+}
+
+/* Scrollbar en Firefox */
+html {
+  scrollbar-width: auto;
+  scrollbar-color: #004c99 #0066cc; /* thumb azul oscuro, track azul */
+}

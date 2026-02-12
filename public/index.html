@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Protegido</title>
+  <script>
+    // HTML encriptado en base64 (ejemplo: un div de bienvenida)
+    const encrypted = "PGRpdiBzdHlsZT0nZm9udC1zaXplOjIycHg7Y29sb3I6IzExMTsnPkVzdGEgZXMgZWwgaHRtbCBkZXNlbmNyaXB0YWRvPC9kaXY+";
+    window.onload = function() {
+      document.body.innerHTML = atob(encrypted);
+    }
+  </script>
+</head>
+<body>
+  <!-- El contenido real se inserta por JS -->
+</body>
+</html> 

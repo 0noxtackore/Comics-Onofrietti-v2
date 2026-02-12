@@ -1,0 +1,477 @@
+/* Estilos específicos del footer */
+
+/* Estilos básicos para asegurar que el footer se muestre */
+.footer-section {
+    display: block !important;
+    width: 100% !important;
+    background: #202020 !important;
+    color: #fff !important;
+    margin: 0 !important;
+    padding: 60px 0 !important;
+    position: relative !important;
+    z-index: 10 !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Asegurar que todos los footers se muestren correctamente */
+#f1, #f2, #f3 {
+    display: block !important;
+    width: 100vw !important;
+    background: #202020 !important;
+    color: #fff !important;
+    margin: 0 !important;
+    padding: 40px 0 30px 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Contenedor del footer */
+.footer-section .container {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 15px !important;
+}
+
+/* Logo del footer */
+#co-logo {
+    width: 120px;
+    height: auto;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+#co-logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+/* Estilos generales del footer */
+.footer-section {
+    font-size: 12px;
+    margin: 0;
+    padding: 40px 0 30px 0;
+}
+
+/* Tabla del footer desktop */
+.footer-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.footer-section td, .footer-section th {
+    padding: 20px 15px;
+    vertical-align: top;
+    text-align: center;
+}
+
+/* Enlaces del footer */
+.footer-section a {
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+}
+
+.footer-section a:hover {
+    color: #fff !important;
+    text-decoration: none;
+    transform: translateX(3px);
+}
+
+.footer-section a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background: linear-gradient(90deg, #2563eb, #1d4ed8);
+    transition: width 0.3s ease;
+}
+
+.footer-section a:hover::after {
+    width: 100%;
+}
+
+/* Títulos de secciones */
+.footer-section h5, .footer-section h6 {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 14px;
+    position: relative;
+}
+
+.footer-section h5::after, .footer-section h6::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, #2563eb, #1d4ed8);
+    border-radius: 1px;
+}
+
+/* Iconos de redes sociales */
+.social-icons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    transition: all 0.3s ease;
+    text-decoration: none;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-icons a:hover {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(29, 78, 216, 0.2));
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+    border-color: rgba(0, 123, 255, 0.3);
+}
+
+.social-icons a:hover svg {
+    color: #2563eb !important;
+    transform: scale(1.1);
+}
+
+.social-icons svg {
+    width: 18px;
+    height: 18px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+/* Iconos desktop específicos */
+.social-icons-desktop {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.social-icons-desktop a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    transition: all 0.3s ease;
+    text-decoration: none;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-icons-desktop a:hover {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(29, 78, 216, 0.2));
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+    border-color: rgba(0, 123, 255, 0.3);
+}
+
+.social-icons-desktop a:hover svg {
+    color: #2563eb !important;
+    transform: scale(1.05);
+}
+
+.social-icons-desktop svg {
+    width: 16px;
+    height: 16px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+/* Listas del footer */
+.footer-section ul {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.footer-section li {
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+    text-align: center;
+    list-style: none;
+}
+
+.footer-section li:hover {
+    transform: translateX(5px);
+}
+
+.footer-section li a {
+    color: #ccc;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.3s ease;
+}
+
+.footer-section li a:hover {
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Configuración responsive del footer */
+
+/* Por defecto, mostrar footer desktop (f1) */
+#f1 {
+    display: flex !important;
+}
+
+#f2, #f3 {
+    display: none !important;
+}
+
+/* Móviles (hasta 480px) */
+@media (max-width: 480px) {
+    #f1 {
+        display: none !important;
+    }
+    #f2 {
+        display: flex !important;
+    }
+    #f3 {
+        display: none !important;
+    }
+    
+    .footer-section .container {
+        padding: 0 10px !important;
+    }
+    
+    .footer-section {
+        padding: 30px 0 20px 0 !important;
+    }
+    
+    #f1, #f2, #f3 {
+        padding: 30px 0 20px 0 !important;
+    }
+    
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 1em;
+    }
+    
+    .social-icons a {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .social-icons svg {
+        width: 22px;
+        height: 22px;
+    }
+    
+    #co-logo {
+        width: 100px;
+    }
+    
+    .footer-section h6 {
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+    
+    .footer-section li {
+        margin-bottom: 8px;
+    }
+    
+    .footer-section li a {
+        font-size: 12px;
+    }
+}
+
+/* Tablets (481px a 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    #f1 {
+        display: none !important;
+    }
+    #f2 {
+        display: flex !important;
+    }
+    #f3 {
+        display: none !important;
+    }
+    
+    .footer-section .container {
+        padding: 0 15px !important;
+    }
+    
+    .footer-section {
+        padding: 35px 0 25px 0 !important;
+    }
+    
+    #f1, #f2, #f3 {
+        padding: 35px 0 25px 0 !important;
+    }
+    
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 1em;
+    }
+    
+    .social-icons a {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .social-icons svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    #co-logo {
+        width: 110px;
+    }
+}
+
+/* Tablets grandes (769px a 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #f1 {
+        display: flex !important;
+    }
+    #f2, #f3 {
+        display: none !important;
+    }
+    
+    .footer-section .container {
+        padding: 0 20px !important;
+    }
+    
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .social-icons a {
+        width: 38px;
+        height: 38px;
+    }
+    
+    .social-icons svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    #co-logo {
+        width: 100px;
+    }
+}
+
+/* Desktop (1025px y más) */
+@media (min-width: 1025px) {
+    #f1 {
+        display: flex !important;
+    }
+    #f2, #f3 {
+        display: none !important;
+    }
+    
+    .footer-section .container {
+        padding: 0 30px !important;
+    }
+    
+    .social-icons-desktop {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+    }
+    
+    #co-logo {
+        width: 120px;
+    }
+    
+    .footer-section h5 {
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+    
+    .footer-section li {
+        margin-bottom: 12px;
+    }
+    
+    .footer-section li a {
+        font-size: 13px;
+    }
+}
+
+/* Efectos adicionales */
+.footer-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.5), transparent);
+}
+
+/* Animaciones suaves */
+.footer-section * {
+    transition: all 0.3s ease;
+}
+
+/* Mejoras para accesibilidad */
+.footer-section a:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* Estilos para texto de copyright */
+.footer-section .text-muted {
+    color: #aaa !important;
+    font-size: 11px;
+}
+
+.footer-section .font-weight-bold {
+    font-weight: 600;
+}
+
+/* Efecto de partículas de fondo */
+.footer-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
