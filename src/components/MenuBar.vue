@@ -925,8 +925,8 @@ onUnmounted(() => {
   z-index: 2000;
   display: flex;
   flex-direction: column;
-  box-shadow: 5px 0 25px rgba(0,0,0,0.7);
-  border-right: 1px solid #333;
+  box-shadow: none;
+  border-right: none;
 }
 
 @media (max-width: 768px) {

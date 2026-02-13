@@ -584,6 +584,7 @@ onUnmounted(() => {
   text-align: left;
   color: inherit;
   font: inherit;
+  box-shadow: none;
 }
 
 .mu-arrow {
@@ -650,19 +651,18 @@ onUnmounted(() => {
   position: relative;
   aspect-ratio: 2 / 3;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   margin-bottom: 15px;
   border-bottom: 4px solid transparent; /* Prepare for hover effect */
   transition: all 0.3s ease;
 }
 
 .mu-section.is-light .mu-card-image {
-  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  box-shadow: none;
 }
 
 .mu-card:hover .mu-card-image {
   transform: translateY(-8px);
-  box-shadow: 0 15px 35px rgba(37, 99, 235, 0.25);
+  box-shadow: none;
   border-bottom-color: #2563eb;
 }
 

@@ -43,7 +43,6 @@
                 <input v-model.trim="purchaseCode" class="code-input" type="text" inputmode="text" autocomplete="off" placeholder="INGRESA EL CÓDIGO DE COMPRA">
                 <button class="btn-primary" type="button" @click="redeemCode" :disabled="isUnlocked">DESBLOQUEAR</button>
               </div>
-              <button class="btn-secondary" type="button" @click="downloadComic" :disabled="!isUnlocked">DESCARGAR</button>
             </div>
 
             <p v-if="redeemError" class="redeem-error">{{ redeemError }}</p>
@@ -60,12 +59,12 @@
           <li><a href="#overview" :class="{ active: activeSection === 'overview' }">RESUMEN</a></li>
           <li><a href="#creators" :class="{ active: activeSection === 'creators' }">AUTOR</a></li>
           <li><a href="#characters" :class="{ active: activeSection === 'characters' }">PERSONAJES</a></li>
-          <li><a href="#related" :class="{ active: activeSection === 'related' }">RECOMENDADOS</a></li>
+          <li><a href="#related" :class="{ active: activeSection === 'related' }">EPISODIOS</a></li>
         </ul>
       </div>
     </nav>
 
-    <main v-if="issue" class="main-content">
+    <main class="main-content">
       <!-- Overview Section -->
       <section id="overview" class="content-section">
         <div class="container">
@@ -87,8 +86,8 @@
             <div class="details-panel">
               <h3 class="subsection-title">DETALLES</h3>
               <ul class="details-list">
-                <li><span class="k">Serie:</span> <span class="v">{{ issue.title }}</span></li>
-                <li><span class="k">Número:</span> <span class="v">{{ issue.issue }}</span></li>
+                <li><span class="k">Serie:</span> <span class="v">{{ issue?.title }}</span></li>
+                <li><span class="k">Número:</span> <span class="v">{{ issue?.issue }}</span></li>
                 <li><span class="k">Publicado:</span> <span class="v">{{ formattedDate }}</span></li>
                 <li><span class="k">Clasificación:</span> <span class="v">T+ (Adolescentes +)</span></li>
               </ul>
@@ -128,9 +127,9 @@
           </div>
           <div class="characters-grid">
             <div v-for="char in mockCharacters" :key="char.name" class="character-item">
-              <div class="char-thumb">
+              <router-link :to="{ name: 'PersonajeWiki', params: { slug: slugifyChar(char.name) } }" class="char-thumb" aria-label="Ver personaje">
                 <img :src="char.image" :alt="char.name">
-              </div>
+              </router-link>
               <div class="char-name">{{ char.name }}</div>
             </div>
           </div>
@@ -141,7 +140,7 @@
       <section id="related" class="content-section alt-bg">
         <div class="container">
           <div class="section-header">
-            <h2 class="section-title">RECOMENDADOS</h2>
+            <h2 class="section-title">EPISODIOS DEL PERSONAJE ({{ characterName }})</h2>
             <div class="title-underline"></div>
           </div>
           <div class="recommended-carousel">
@@ -161,6 +160,9 @@
               >
                 <div class="comic-image">
                   <img :src="getImageUrl(cm.image)" :alt="cm.title">
+                  <div class="episode-overlay">
+                    <span class="view-more">VER MÁS</span>
+                  </div>
                 </div>
                 <div class="comic-info">
                   <h4 class="comic-title">{{ cm.title }}</h4>
@@ -177,12 +179,55 @@
           </div>
         </div>
       </section>
+
+      <section class="content-section series-section">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">SERIES RECOMENDADAS</h2>
+            <div class="title-underline"></div>
+          </div>
+          <div class="series-carousel" aria-label="Series del personaje">
+            <button v-if="showSeriesArrows" class="sc-arrow sc-arrow-prev" type="button" aria-label="Anterior" :disabled="!seriesCanPrev" :class="{ 'is-disabled': !seriesCanPrev }" @click="scrollSeries('prev')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+              </svg>
+            </button>
+
+            <div ref="seriesTrackRef" class="series-track" role="list">
+              <router-link
+                v-for="s in seriesItems"
+                :key="s.slug"
+                :to="{ name: 'ComicSeries', params: { slug: s.slug }, query: { name: s.title } }"
+                class="series-card"
+                role="listitem"
+              >
+                <div class="series-image">
+                  <img :src="s.image" :alt="s.title" draggable="false" />
+                  <div class="series-overlay">
+                    <span class="view-more">VER MÁS</span>
+                  </div>
+                </div>
+                <div class="series-title">{{ s.title }}</div>
+                <div class="series-sub">SERIE</div>
+              </router-link>
+            </div>
+
+            <button v-if="showSeriesArrows" class="sc-arrow sc-arrow-next" type="button" aria-label="Siguiente" :disabled="!seriesCanNext" :class="{ 'is-disabled': !seriesCanNext }" @click="scrollSeries('next')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M4.646 14.354a.5.5 0 0 1 0-.708L10.293 8 4.646 2.354a.5.5 0 1 1 .708-.708l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708 0"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
     </main>
-    
-    <div v-else class="not-found">
-      <div class="container">
-        <h1>NÚMERO NO ENCONTRADO</h1>
-        <router-link to="/comics" class="btn-primary">EXPLORAR CÓMICS</router-link>
+
+    <div v-if="isDownloadModalOpen" class="download-modal" role="dialog" aria-modal="true" aria-label="Descarga completada">
+      <div class="download-modal-backdrop" @click="closeDownloadModal"></div>
+      <div class="download-modal-card">
+        <div class="download-modal-title">DESCARGA COMPLETADA</div>
+        <div class="download-modal-text">Se descargó {{ issue?.title }} {{ issue?.issue }}.</div>
+        <button class="btn-primary" type="button" @click="closeDownloadModal">OK</button>
       </div>
     </div>
   </div>
@@ -191,7 +236,7 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { comics } from '../assets/js/slider.js'
+import { comics, featuredComics } from '../assets/js/slider.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -204,9 +249,22 @@ const purchaseCode = ref('')
 const isUnlocked = ref(false)
 const redeemError = ref('')
 
+const isDownloadModalOpen = ref(false)
+
 const recommendedTrackRef = ref<HTMLDivElement | null>(null)
 const recommendedCanPrev = ref(false)
 const recommendedCanNext = ref(false)
+
+const seriesTrackRef = ref<HTMLDivElement | null>(null)
+const seriesCanPrev = ref(false)
+const seriesCanNext = ref(false)
+const isMobile = ref(false)
+
+type SeriesItem = {
+  title: string
+  slug: string
+  image: string
+}
 
 type Comic = {
   id?: string
@@ -220,9 +278,15 @@ type Comic = {
   category?: string
 }
 
+const allComics = computed<Comic[]>(() => {
+  const a = (comics || []) as Comic[]
+  const b = (featuredComics || []) as Comic[]
+  return [...a, ...b]
+})
+
 const issue = computed<Comic | undefined>(() => {
   const id = String(route.params.id || '')
-  return comics.find((c: any) => String(c.id || '') === id)
+  return allComics.value.find((c: any) => String(c.id || '') === id)
 })
 
 const getImageUrl = (path: string | undefined) => {
@@ -263,8 +327,59 @@ const heroBgStyle = computed(() => {
 const related = computed<Comic[]>(() => {
   const c = issue.value
   if (!c) return []
-  const pool = comics.filter((x: any) => x && x.id && String(x.id) !== String(c.id))
+  const pool = allComics.value.filter((x: any) => x && x.id && String(x.id) !== String(c.id))
   return pool.slice(0, 10) as Comic[]
+})
+
+const characterName = computed(() => {
+  const c = issue.value
+  return String(c?.title || '').toUpperCase()
+})
+
+const characterSeries = computed(() => {
+  const key = String(issue.value?.title || '').toLowerCase().trim()
+  const map: Record<string, string[]> = {
+    'spider-man': ['AMAZING SPIDER-MAN', 'SPECTACULAR SPIDER-MAN', 'ULTIMATE SPIDER-MAN'],
+    'batman': ['DETECTIVE COMICS', 'BATMAN: GOTHAM KNIGHTS', 'BATMAN & ROBIN'],
+    'thor': ['THOR', 'MIGHTY THOR', 'THOR: GOD OF THUNDER'],
+    'iron man': ['INVINCIBLE IRON MAN', 'IRON MAN', 'IRON MAN: EXTREMIS'],
+    'x-men': ['UNCANNY X-MEN', 'X-MEN', 'ASTONISHING X-MEN'],
+    'wonder woman': ['WONDER WOMAN', 'SENSATION COMICS', 'WONDER WOMAN: EARTH ONE'],
+  }
+
+  return map[key] || ['SERIE PRINCIPAL', 'ESPECIALES', 'NUEVA SAGA']
+})
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9\-]/g, '')
+
+const slugifyChar = (value: string) =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9\-]/g, '')
+
+const seriesItems = computed<SeriesItem[]>(() => {
+  const base = characterSeries.value
+  const pool = related.value.length ? related.value : issue.value ? [issue.value] : []
+  return base.map((title, idx) => {
+    const rep = pool[idx % Math.max(1, pool.length)]
+    return {
+      title,
+      slug: slugify(title),
+      image: getImageUrl(rep?.image) || getImageUrl(issue.value?.image),
+    }
+  })
+})
+
+const showSeriesArrows = computed(() => {
+  const count = seriesItems.value.length
+  return isMobile.value ? count >= 2 : count >= 4
 })
 
 // Mock Data for Marvel Layout
@@ -298,6 +413,8 @@ const redeemCode = () => {
   }
 
   isUnlocked.value = true
+  downloadComic()
+  isDownloadModalOpen.value = true
 }
 
 const downloadComic = () => {
@@ -326,6 +443,10 @@ const downloadComic = () => {
   URL.revokeObjectURL(url)
 }
 
+const closeDownloadModal = () => {
+  isDownloadModalOpen.value = false
+}
+
 const updateRecommendedArrows = () => {
   const el = recommendedTrackRef.value
   if (!el) {
@@ -351,6 +472,42 @@ const scrollRecommended = (dir: 'prev' | 'next') => {
   window.setTimeout(updateRecommendedArrows, 250)
 }
 
+const updateSeriesArrows = () => {
+  const el = seriesTrackRef.value
+  if (!showSeriesArrows.value) {
+    seriesCanPrev.value = false
+    seriesCanNext.value = false
+    return
+  }
+  if (!el) {
+    seriesCanPrev.value = false
+    seriesCanNext.value = false
+    return
+  }
+
+  const maxScrollLeft = Math.max(0, el.scrollWidth - el.clientWidth)
+  const epsilon = 6
+  const hasOverflow = maxScrollLeft > epsilon
+  seriesCanPrev.value = hasOverflow && el.scrollLeft > epsilon
+  seriesCanNext.value = hasOverflow && el.scrollLeft < maxScrollLeft - epsilon
+}
+
+const scrollSeries = (dir: 'prev' | 'next') => {
+  const el = seriesTrackRef.value
+  if (!el) return
+  if (dir === 'prev' && !seriesCanPrev.value) return
+  if (dir === 'next' && !seriesCanNext.value) return
+  const amount = Math.max(260, Math.floor(el.clientWidth * 0.85))
+  el.scrollBy({ left: dir === 'prev' ? -amount : amount, behavior: 'smooth' })
+  window.setTimeout(updateSeriesArrows, 250)
+}
+
+const handleResize = () => {
+  isMobile.value = window.matchMedia('(max-width: 768px)').matches
+  updateRecommendedArrows()
+  updateSeriesArrows()
+}
+
 const handleScroll = () => {
   isNavSticky.value = window.scrollY > 500
   
@@ -368,19 +525,27 @@ const handleScroll = () => {
 }
 
 onMounted(() => {
+  isMobile.value = window.matchMedia('(max-width: 768px)').matches
   window.addEventListener('scroll', handleScroll)
-  window.addEventListener('resize', updateRecommendedArrows)
+  window.addEventListener('resize', handleResize)
   window.setTimeout(updateRecommendedArrows, 0)
+  window.setTimeout(updateSeriesArrows, 0)
   if (recommendedTrackRef.value) {
     recommendedTrackRef.value.addEventListener('scroll', updateRecommendedArrows, { passive: true })
+  }
+  if (seriesTrackRef.value) {
+    seriesTrackRef.value.addEventListener('scroll', updateSeriesArrows, { passive: true })
   }
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
-  window.removeEventListener('resize', updateRecommendedArrows)
+  window.removeEventListener('resize', handleResize)
   if (recommendedTrackRef.value) {
     recommendedTrackRef.value.removeEventListener('scroll', updateRecommendedArrows)
+  }
+  if (seriesTrackRef.value) {
+    seriesTrackRef.value.removeEventListener('scroll', updateSeriesArrows)
   }
 })
 </script>
@@ -625,6 +790,201 @@ onUnmounted(() => {
   background: rgba(255,255,255,0.1);
 }
 
+.download-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: grid;
+  place-items: center;
+}
+
+.download-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+}
+
+.download-modal-card {
+  position: relative;
+  width: min(520px, calc(100vw - 40px));
+  background: #151515;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 22px;
+}
+
+.download-modal-title {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 900;
+  letter-spacing: 2px;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.download-modal-text {
+  color: rgba(255,255,255,0.86);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.series-section {
+  background: #ffffff;
+  color: #151515;
+}
+
+.series-carousel {
+  background: #ffffff;
+  color: #151515;
+  border: none;
+  margin-top: 24px;
+  padding: 18px;
+  position: relative;
+}
+
+.series-track {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 6px 2px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.series-track::-webkit-scrollbar {
+  display: none;
+}
+
+.series-card {
+  flex: 0 0 280px;
+  min-width: 280px;
+  border: 1px solid rgba(0,0,0,0.10);
+  border-radius: 0px;
+  padding: 14px;
+  background: #ffffff;
+  scroll-snap-align: start;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.series-card:hover {
+  transform: translateY(-10px);
+}
+
+.series-image {
+  width: 100%;
+  height: 120px;
+  border-radius: 0px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.06);
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.series-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.series-card:hover .series-image img {
+  transform: scale(1.1);
+}
+
+.series-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(29, 195, 236, 0.53);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.series-card:hover .series-overlay {
+  opacity: 1;
+}
+
+.view-more {
+  color: white;
+  font-weight: 800;
+  letter-spacing: 1px;
+  border: 2px solid white;
+  padding: 8px 16px;
+}
+
+@media (min-width: 1024px) {
+  .series-card {
+    flex: 0 0 340px;
+    min-width: 340px;
+  }
+
+  .series-image {
+    height: 160px;
+  }
+}
+
+.sc-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 0;
+  border: 1px solid #2563eb;
+  background: #2563eb;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 5;
+}
+
+.sc-arrow:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+.sc-arrow.is-disabled,
+.sc-arrow:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.sc-arrow-prev {
+  left: 10px;
+}
+
+.sc-arrow-next {
+  right: 10px;
+}
+
+.series-title {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+.series-sub {
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #111111;
+  opacity: 0.75;
+}
+
 /* STICKY NAV */
 .sticky-nav {
   background: #fff;
@@ -819,13 +1179,25 @@ onUnmounted(() => {
   margin: 0 auto 15px;
   overflow: hidden;
   border: 4px solid #fff;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  display: block;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.char-thumb:hover {
+  transform: translateY(-6px);
 }
 
 .char-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.char-thumb:hover img {
+  transform: scale(1.06);
 }
 
 .char-name {
@@ -898,16 +1270,24 @@ onUnmounted(() => {
 }
 
 .comic-item {
+  scroll-snap-align: start;
+  flex: 0 0 210px;
+  min-width: 210px;
   text-decoration: none;
   color: inherit;
-  transition: all 0.3s ease;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.comic-item:hover {
+  transform: translateY(-10px);
 }
 
 .comic-image {
   aspect-ratio: 2/3;
   overflow: hidden;
   margin-bottom: 10px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  position: relative;
 }
 
 .comic-image img {
@@ -918,7 +1298,22 @@ onUnmounted(() => {
 }
 
 .comic-item:hover .comic-image img {
-  transform: scale(1.05);
+  transform: scale(1.1);
+}
+
+.episode-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(29, 195, 236, 0.53);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.comic-item:hover .episode-overlay {
+  opacity: 1;
 }
 
 .comic-title {
@@ -933,12 +1328,6 @@ onUnmounted(() => {
   font-size: 12px;
   color: #999;
   margin-top: 4px;
-}
-
-/* NOT FOUND */
-.not-found {
-  padding: 150px 0;
-  text-align: center;
 }
 
 @media (max-width: 1024px) {

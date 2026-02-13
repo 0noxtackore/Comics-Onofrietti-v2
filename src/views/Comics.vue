@@ -75,7 +75,7 @@
                   :class="{ 'is-1': idx === 0, 'is-2': idx === 1, 'is-3': idx === 2 }"
                 >
                   <div class="ranking-info">
-                    <div class="ranking-name">{{ cm.title }}</div>
+                    <div class="ranking-name">{{ cm.title }} {{ cm.issue }}</div>
                     <div class="ranking-meta">RATING {{ cm.rating }}</div>
                     <div class="ranking-stars">
                       <span v-for="star in 5" :key="star" class="star" :class="{ filled: star <= Math.floor(cm.rating / 2) }">★</span>

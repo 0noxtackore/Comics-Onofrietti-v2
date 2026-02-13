@@ -5,6 +5,7 @@ import Comics from '../views/Comics.vue'
 import Personajes from '../views/Personajes.vue'
 import PersonajeWiki from '../views/PersonajeWiki.vue'
 import ComicIssue from '../views/ComicIssue.vue'
+import ComicSeries from '../views/ComicSeries.vue'
 import Juegos from '../views/Juegos.vue'
 import JuegoWiki from '../views/JuegoWiki.vue'
 import Mas from '../views/Mas.vue'
@@ -19,7 +20,8 @@ const routes = [
   { path: '/nuevos', name: 'Nuevos', component: Nuevos },
   { path: '/nuevos/:id', name: 'NovedadDetalle', component: NovedadDetalle },
   { path: '/comics', name: 'Comics', component: Comics },
-  { path: '/comics/issue/:id', name: 'ComicIssue', component: ComicIssue },
+  { path: '/comics/issue/:id', name: 'ComicIssue', component: ComicIssue, alias: '/comics/:id' },
+  { path: '/comics/series/:slug', name: 'ComicSeries', component: ComicSeries },
   { path: '/personajes', name: 'Personajes', component: Personajes },
   { path: '/personajes/:slug', name: 'PersonajeWiki', component: PersonajeWiki },
   { path: '/juegos', name: 'Juegos', component: Juegos },

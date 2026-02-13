@@ -39,7 +39,7 @@ defineProps<{
   position: relative;
   aspect-ratio: 2 / 3;
   overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  box-shadow: none;
 }
 
 .card-image {
